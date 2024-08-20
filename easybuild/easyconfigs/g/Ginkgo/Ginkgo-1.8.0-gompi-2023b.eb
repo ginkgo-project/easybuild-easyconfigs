@@ -1,0 +1,42 @@
+easyblock = 'CMakeNinja'
+
+name = 'Ginkgo'
+version = '1.8.0'
+
+homepage = 'https://ginkgo-project.github.io'
+description = """Ginkgo is a high-performance linear algebra library for manycore systems, with a focus on
+ sparse solution of linear systems."""
+
+toolchain = {'name': 'gompi', 'version': '2023b'}
+toolchainopts = {'static': True, 'openmp': True}
+
+source_urls = ['https://github.com/ginkgo-project/ginkgo/archive/refs/tags']
+sources = ['v%(version)s.tar.gz']
+#checksums = ['1b0e907b4046cdf7cef16d1730c12ba812b38f2764f49f74f454239a27f63596']
+
+builddependencies = [
+    ('CMake', '3.27.6', '', ('GCCcore', '13.2.0')),
+    ('Ninja', '1.11.1', '', ('GCCcore', '13.2.0')),
+]
+
+configopts = """
+    -DBUILD_SHARED_LIBS=OFF
+    -DGINKGO_BUILD_REFERENCE=ON
+    -DGINKGO_BUILD_OMP=ON
+    -DGINKGO_BUILD_CUDA=OFF
+    -DGINKGO_BUILD_HIO=OFF
+    -DGINKGO_BUILD_SYCL=OFF
+    -DGINKGO_BUILD_TESTS=OFF
+    -DGINKGO_BUILD_BENCHMARKS=OFF
+    -DGINKGO_BUILD_EXAMPLES=OFF
+"""
+
+#buildopts = " && ninja test"
+#runtest = 'test'
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': [],
+}
+
+moduleclass = 'numlib'
